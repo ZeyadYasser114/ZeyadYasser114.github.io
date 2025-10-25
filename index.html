@@ -3,124 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Craftsmanship</title>
+    <title>Zeyad Yasser - Digital Craftsmanship</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --background-color: #000000;
-            --text-color: #ededed;
-            --muted-color: #4a4a4a;
+            --background-color: #0d1117;
+            --primary-text: #e6edf3;
+            --secondary-text: #8b949e;
+            --accent-color: #38bdf8; /* Light Blue */
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             background-color: var(--background-color);
-            color: var(--text-color);
-            font-family: 'Roboto Mono', monospace;
-            margin: 0;
-            height: 100vh;
+            color: var(--primary-text);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
             overflow: hidden;
+            background: linear-gradient(135deg, #161b22, #0d1117, #010409);
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--accent-color);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            animation: fadeIn 1.5s ease-in;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
         }
 
-        .corner-element {
-            position: absolute;
-            padding: 2rem 2.5rem;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .top-left { top: 0; left: 0; font-weight: 700; font-size: 1.1rem; }
-        .top-right { top: 0; right: 0; }
-        .bottom-left { bottom: 0; left: 0; color: var(--muted-color); }
-        .bottom-right { bottom: 0; right: 0; }
-
-        .corner-element a, .corner-element span {
-            margin: 0 1rem;
+        nav a {
+            color: var(--primary-text);
             text-decoration: none;
-            color: inherit;
+            margin: 0 1.5rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: var(--accent-color);
         }
 
-        .main-title {
-            font-size: clamp(2rem, 6vw, 6rem);
+        /* --- MODIFIED HERO SECTION --- */
+        #hero {
+            text-align: left; /* Aligned to the left */
+        }
+        #hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem); /* Adjusted size */
             font-weight: 700;
-            letter-spacing: -2px;
-            margin: 0;
-            color: #ffffff;
-            padding: 0 1rem;
+            line-height: 1.1;
+            background: linear-gradient(90deg, var(--accent-color), #fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Typewriter styles */
+        #hero .typewriter {
+            font-family: 'Roboto Mono', monospace; /* Monospaced font for typewriter */
+            font-size: 1.25rem;
+            color: var(--secondary-text);
+            margin-top: 1rem;
+            height: 2rem; /* Set height to prevent layout shift */
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Blinking cursor effect */
+        .typewriter .cursor {
+            display: inline-block;
+            background-color: var(--secondary-text);
+            margin-left: 0.1rem;
+            width: 3px;
+            animation: blink 1s infinite;
         }
 
+        @keyframes blink {
+            0% { background-color: var(--secondary-text); }
+            49% { background-color: var(--secondary-text); }
+            50% { background-color: transparent; }
+            99% { background-color: transparent; }
+            100% { background-color: var(--secondary-text); }
+        }
+        /* --- END MODIFIED HERO --- */
+
+
+        #about p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: #161b22;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover { transform: translateY(-10px); }
+        .project-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--accent-color); }
+        .project-card p { color: var(--secondary-text); margin-bottom: 1.5rem; }
+        .project-card a { color: var(--primary-text); text-decoration: none; font-weight: 600; }
+        .project-card a:hover { color: var(--accent-color); }
+        
+        #contact { text-align: center; }
+        #contact .links { margin-top: 2rem; }
+        #contact a { display: inline-block; color: var(--primary-text); font-size: 1.2rem; text-decoration: none; margin: 0 1.5rem; padding: 0.5rem 1rem; border: 2px solid var(--border-color); border-radius: 8px; transition: all 0.3s ease; }
+        #contact a:hover { background-color: var(--accent-color); border-color: var(--accent-color); color: #0d1117; }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
-    <div class="corner-element top-left">
-        <span class="scramble">ZY.</span>
-    </div>
-    
-    <div class="corner-element top-right">
-        <a href="#" class="scramble">PROJECTS</a>
-        <a href="#" class="scramble">CONTACT</a>
-    </div>
+    <div class="background-container"></div>
 
-    <h1 class="main-title">Digital Craftsmanship</h1>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-    <div class="corner-element bottom-left">
-        <span class="scramble">AVAILABLE FOR WORK</span>
-    </div>
-    
-    <div class="corner-element bottom-right">
-        <a href="https://github.com/ZeyadYasser114" target="_blank" class="scramble">GITHUB</a>
-        <a href="#" class="scramble">LINKEDIN</a>
-    </div>
+    <section id="hero" class="section">
+        <div>
+            <h1 id="hero-title">Digital Craftsmanship</h1>
+            <p class="typewriter"><span id="typewriter-text"></span><span class="cursor">&nbsp;</span></p>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="reveal">
+            <h2 class="section-title">About Me</h2>
+            <p>I am a passionate developer and designer with a keen eye for detail. I specialize in building high-quality, responsive websites and applications that are not only functional but also provide an exceptional user experience. My goal is to transform complex problems into elegant, simple solutions.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="reveal">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card"><h3>Project One</h3><p>A brief but compelling description of a project, highlighting the key technologies and its purpose.</p><a href="#" target="_blank">View Project &rarr;</a></div>
+                <div class="project-card"><h3>Project Two</h3><p>This card describes another significant piece of work, showcasing a different skill set or technology stack.</p><a href="#" target="_blank">View Project &rarr;</a></div>
+                <div class="project-card"><h3>Project Three</h3><p>Showcasing a third project to demonstrate versatility and a solid portfolio of work.</p><a href="#" target="_blank">View Project &rarr;</a></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="reveal">
+            <h2 class="section-title">Get In Touch</h2>
+            <p>I'm currently available for freelance work and open to new opportunities.</p>
+            <div class="links">
+                <a href="mailto:your-email@example.com">Email</a>
+                <a href="https://github.com/ZeyadYasser114" target="_blank">GitHub</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+    </section>
 
     <script>
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!#%&/()=?@${[]}";
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- HERO ANIMATIONS SCRIPT ---
+            
+            // 1. Title Scramble Effect
+            const titleElement = document.getElementById('hero-title');
+            const originalTitle = titleElement.innerText;
+            const scrambleChars = "!<>[]{}—=+*#?/";
+            let titleInterval = null;
 
-        document.querySelectorAll('.scramble').forEach(element => {
-            let interval = null;
-            const originalText = element.innerText;
+            let titleIteration = 0;
+            clearInterval(titleInterval);
+            titleInterval = setInterval(() => {
+                titleElement.innerText = originalTitle
+                    .split("")
+                    .map((char, index) => {
+                        if(index < titleIteration) return originalTitle[index];
+                        return char !== " " ? scrambleChars[Math.floor(Math.random() * scrambleChars.length)] : " ";
+                    })
+                    .join("");
+                
+                if(titleIteration >= originalTitle.length) clearInterval(titleInterval);
+                titleIteration += originalTitle.length / 40;
+            }, 40);
 
-            element.addEventListener('mouseover', () => {
-                let iteration = 0;
-                
-                clearInterval(interval);
-                
-                interval = setInterval(() => {
-                    element.innerText = originalText
-                        .split("")
-                        .map((letter, index) => {
-                            if (index < iteration) {
-                                return originalText[index];
-                            }
-                            // Return a random letter if it's not a space
-                            return letter !== " " ? letters[Math.floor(Math.random() * letters.length)] : " ";
-                        })
-                        .join("");
-                    
-                    if (iteration >= originalText.length) { 
-                        clearInterval(interval);
+            // 2. Typewriter Effect
+            const typewriterElement = document.getElementById('typewriter-text');
+            const words = ["App Development", "Backend Systems", "Web Design", "API Integration"];
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function type() {
+                const currentWord = words[wordIndex];
+                const typeSpeed = isDeleting ? 100 : 200;
+
+                // Type or delete a character
+                typewriterElement.textContent = currentWord.substring(0, charIndex);
+
+                if (!isDeleting && charIndex < currentWord.length) {
+                    charIndex++;
+                } else if (isDeleting && charIndex > 0) {
+                    charIndex--;
+                } else {
+                    isDeleting = !isDeleting;
+                    if (!isDeleting) {
+                        wordIndex = (wordIndex + 1) % words.length;
                     }
-                    
-                    iteration += 1 / 3;
-                }, 30);
-            });
-
-            element.addEventListener('mouseleave', () => {
-                clearInterval(interval);
-                element.innerText = originalText;
-            });
+                }
+                
+                const pause = charIndex === currentWord.length ? 2000 : typeSpeed;
+                setTimeout(type, pause);
+            }
+            type();
         });
+
+        // --- SCROLL REVEAL SCRIPT (UNCHANGED) ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add('visible');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
     </script>
 
 </body>
