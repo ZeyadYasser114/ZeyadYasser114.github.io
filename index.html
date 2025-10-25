@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeyad Yasser - Digital Experiences</title>
+    <title>Digital Craftsmanship</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -23,12 +23,12 @@
         html, body {
             background-color: var(--background-color);
             color: var(--text-color);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden; /* Prevents scrollbars */
-            cursor: none; /* Hide the default cursor */
+            overflow: hidden;
+            cursor: none;
         }
 
         .wrapper {
@@ -44,10 +44,13 @@
             height: 24px;
             border: 2px solid white;
             border-radius: 50%;
-            pointer-events: none; /* Allows clicking through the element */
+            pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out;
+            transition: transform 0.2s ease-out, width 0.2s ease, height 0.2s ease;
             z-index: 9999;
+        }
+        .cursor.hover {
+            transform: translate(-50%, -50%) scale(0.6);
         }
 
         /* Header Navigation */
@@ -62,6 +65,7 @@
         .logo {
             font-weight: 700;
             font-size: 1.5rem;
+            animation: slideIn 1s ease-out forwards;
         }
 
         nav a {
@@ -69,12 +73,17 @@
             text-decoration: none;
             margin-left: 2.5rem;
             font-size: 1rem;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
+            opacity: 0;
+            transition: opacity 0.3s ease, color 0.3s ease;
+            animation: slideIn 0.5s ease-out forwards;
         }
+        nav a:nth-child(1) { animation-delay: 0.2s; }
+        nav a:nth-child(2) { animation-delay: 0.4s; }
+        nav a:nth-child(3) { animation-delay: 0.6s; }
 
         nav a:hover {
             opacity: 1;
+            color: var(--accent-color);
         }
 
         /* Main Content Area */
@@ -89,12 +98,14 @@
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 6vw, 6rem); /* Responsive font size */
+            font-size: clamp(3rem, 7vw, 7rem);
             font-weight: 700;
             line-height: 1.1;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.04em;
             max-width: 1200px;
             margin: 0;
+            opacity: 0;
+            animation: slideIn 1s ease-out 0.8s forwards;
         }
 
         .hero-subtitle {
@@ -102,6 +113,8 @@
             color: var(--muted-text-color);
             margin-top: 1.5rem;
             font-weight: 400;
+            opacity: 0;
+            animation: slideIn 1s ease-out 1s forwards;
         }
 
         /* Footer Ticker */
@@ -109,13 +122,16 @@
             width: 100%;
             border-top: 1px solid var(--border-color);
             padding: 1.5rem 0;
-            overflow: hidden; /* Essential for the ticker effect */
+            overflow: hidden;
             white-space: nowrap;
         }
 
         .ticker-wrap {
-            display: inline-block; /* Allows the animation to work properly */
+            display: inline-block;
             animation: scroll 40s linear infinite;
+        }
+        footer:hover .ticker-wrap {
+            animation-play-state: paused;
         }
 
         .ticker-item {
@@ -124,17 +140,34 @@
             font-size: 1rem;
             margin-right: 3rem;
             color: var(--muted-text-color);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .ticker-item:hover {
+            color: var(--text-color);
+            transform: scale(1.05);
         }
 
         .ticker-item .separator {
             color: var(--accent-color);
             margin-right: 3rem;
-            font-size: 0.8rem; /* Make separator smaller */
+            font-size: 0.8rem;
+        }
+        
+        /* Shared Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
         }
         
         @keyframes scroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* Animate to half the width for a seamless loop */
+            100% { transform: translateX(-50%); }
         }
 
     </style>
@@ -154,13 +187,13 @@
         </header>
 
         <main>
-            <h1 class="hero-title">Crafting Digital Experiences</h1>
-            <p class="hero-subtitle">Web Development & Design</p>
+            <h1 class="hero-title">Digital Craftsmanship</h1>
+            <p class="hero-subtitle">Design & Development</p>
         </main>
 
         <footer>
             <div class="ticker-wrap">
-                <!-- Content is duplicated for a seamless scroll effect -->
+                <!-- Content is duplicated for seamless scroll -->
                 <div class="ticker-item"><span class="separator">◆</span>Fullstack Development</div>
                 <div class="ticker-item"><span class="separator">◆</span>UI/UX Design</div>
                 <div class="ticker-item"><span class="separator">◆</span>Backend Systems</div>
@@ -177,11 +210,21 @@
     </div>
 
     <script>
-        // Simple script for the custom cursor
         const cursor = document.querySelector('.cursor');
+        const links = document.querySelectorAll('a, .ticker-item');
+
         document.addEventListener('mousemove', e => {
-            cursor.setAttribute("style", "top: "+(e.pageY)+"px; left: "+(e.pageX)+"px;")
-        })
+            cursor.setAttribute("style", `top: ${e.pageY}px; left: ${e.pageX}px;`);
+        });
+
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
     </script>
 
 </body>
