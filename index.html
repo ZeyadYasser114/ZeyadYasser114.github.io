@@ -89,42 +89,24 @@
             color: var(--accent-color);
         }
 
-        /* --- MODIFIED HERO SECTION --- */
+        /* Hero Section */
         #hero {
             text-align: center;
         }
-        #hero .hero-title {
+        #hero h1 {
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 700;
             line-height: 1.1;
-            /* The gradient text is now applied to the spans inside */
-        }
-        
-        /* Letter-by-letter animation for the main name */
-        .hero-title .letter {
-            display: inline-block;
-            opacity: 0;
             background: linear-gradient(90deg, var(--accent-color), #fff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: fadeIn-Up 0.6s ease-out forwards;
-            animation-delay: calc(0.05s * var(--i));
         }
-
-        @keyframes fadeIn-Up {
-            from { opacity: 0; transform: translateY(30px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        #hero #hero-subtitle {
+        #hero p {
             font-size: 1.25rem;
             color: var(--secondary-text);
             margin-top: 1rem;
-            height: 1.5rem; /* Prevents layout shift */
         }
-
-        /* --- END OF MODIFIED HERO SECTION --- */
 
         /* About Section */
         #about p {
@@ -223,10 +205,9 @@
     </nav>
 
     <section id="hero" class="section">
-        <!-- The 'reveal' class is removed here so animations can run on load -->
-        <div>
-            <h1 class="hero-title" id="hero-name">Zeyad Yasser</h1>
-            <p id="hero-subtitle">Digital Craftsmanship & Modern Development</p>
+        <div class="reveal">
+            <h1>Zeyad Yasser</h1>
+            <p>Digital Craftsmanship & Modern Development</p>
         </div>
     </section>
 
@@ -273,51 +254,9 @@
     </section>
 
     <script>
-        // --- NEW SCRIPT FOR HERO ANIMATIONS ---
-        document.addEventListener('DOMContentLoaded', function() {
-            // 1. Animate the main title
-            const nameElement = document.getElementById('hero-name');
-            const nameText = nameElement.innerText;
-            nameElement.innerHTML = ''; // Clear original text
-            let i = 0;
-            for (const letter of nameText) {
-                const span = document.createElement('span');
-                span.textContent = letter === ' ' ? '\u00A0' : letter; // Handle spaces
-                span.className = 'letter';
-                span.style.setProperty('--i', i++);
-                nameElement.appendChild(span);
-            }
-
-            // 2. Animate the subtitle with a scramble effect
-            const subtitleElement = document.getElementById('hero-subtitle');
-            const originalSubtitleText = subtitleElement.innerText;
-            const scrambleChars = "!<>[]{}—=+*#?/";
-            let scrambleInterval = null;
-
-            let iteration = 0;
-            clearInterval(scrambleInterval);
-            scrambleInterval = setInterval(() => {
-                subtitleElement.innerText = originalSubtitleText
-                    .split("")
-                    .map((char, index) => {
-                        if(index < iteration) {
-                            return originalSubtitleText[index];
-                        }
-                        return char !== " " ? scrambleChars[Math.floor(Math.random() * scrambleChars.length)] : " ";
-                    })
-                    .join("");
-                
-                if(iteration >= originalSubtitleText.length){
-                    clearInterval(scrambleInterval);
-                }
-                
-                iteration += originalSubtitleText.length / 50; // Controls speed
-            }, 40);
-        });
-
-
-        // --- YOUR ORIGINAL SCROLL ANIMATION SCRIPT ---
+        // JavaScript for scroll-triggered animations
         const revealElements = document.querySelectorAll('.reveal');
+
         const revealOnScroll = () => {
             const windowHeight = window.innerHeight;
             revealElements.forEach(el => {
@@ -327,6 +266,7 @@
                 }
             });
         };
+
         window.addEventListener('scroll', revealOnScroll);
         // Trigger on load as well
         revealOnScroll();
