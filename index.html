@@ -34,6 +34,7 @@
             overflow-x: hidden;
         }
 
+        /* Animated Background */
         .background-container {
             position: fixed;
             top: 0;
@@ -45,6 +46,7 @@
             background: linear-gradient(135deg, #161b22, #0d1117, #010409);
         }
 
+        /* General Styles */
         .section {
             padding: 6rem 2rem;
             max-width: 1100px;
@@ -63,6 +65,7 @@
             color: var(--accent-color);
         }
 
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -74,6 +77,7 @@
             backdrop-filter: blur(10px);
             z-index: 100;
         }
+
         nav a {
             color: var(--primary-text);
             text-decoration: none;
@@ -85,40 +89,44 @@
             color: var(--accent-color);
         }
 
-        /* --- HERO SECTION REFINED --- */
+        /* --- MODIFIED HERO SECTION --- */
         #hero {
             text-align: center;
         }
         #hero .hero-title {
-            font-size: clamp(2.5rem, 7vw, 5rem); /* Reduced size */
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 700;
             line-height: 1.1;
-            margin-bottom: 1rem;
+            /* The gradient text is now applied to the spans inside */
         }
         
         /* Letter-by-letter animation for the main name */
-        .hero-title span {
+        .hero-title .letter {
             display: inline-block;
             opacity: 0;
-            animation: fadeIn-Up 0.5s ease-out forwards;
-            animation-delay: calc(0.08s * var(--i));
+            background: linear-gradient(90deg, var(--accent-color), #fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeIn-Up 0.6s ease-out forwards;
+            animation-delay: calc(0.05s * var(--i));
         }
-        .hero-title .spacer {
-             width: 1.5rem;
-        }
+
         @keyframes fadeIn-Up {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(30px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         #hero #hero-subtitle {
             font-size: 1.25rem;
             color: var(--secondary-text);
-            font-family: 'Courier New', Courier, monospace; /* Classic hacker font */
-            height: 1.5rem; /* Prevents layout shift during scramble */
+            margin-top: 1rem;
+            height: 1.5rem; /* Prevents layout shift */
         }
 
-        /* --- OTHER SECTIONS --- */
+        /* --- END OF MODIFIED HERO SECTION --- */
+
+        /* About Section */
         #about p {
             font-size: 1.1rem;
             max-width: 800px;
@@ -127,6 +135,7 @@
             line-height: 1.8;
         }
 
+        /* Projects Section */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -139,25 +148,74 @@
             border-radius: 12px;
             padding: 2rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
-        .project-card:hover { transform: translateY(-10px); }
-        .project-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--accent-color); }
-        .project-card p { color: var(--secondary-text); margin-bottom: 1.5rem; }
-        .project-card a { color: var(--primary-text); text-decoration: none; font-weight: 600; }
-        .project-card a:hover { color: var(--accent-color); }
         
-        #contact { text-align: center; }
-        #contact .links { margin-top: 2rem; }
-        #contact a { display: inline-block; color: var(--primary-text); font-size: 1.2rem; text-decoration: none; margin: 0 1.5rem; padding: 0.5rem 1rem; border: 2px solid var(--border-color); border-radius: 8px; transition: all 0.3s ease; }
-        #contact a:hover { background-color: var(--accent-color); border-color: var(--accent-color); color: #0d1117; }
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .project-card p {
+            color: var(--secondary-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card a {
+            color: var(--primary-text);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .project-card a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Contact Section */
+        #contact {
+            text-align: center;
+        }
+        #contact .links {
+            margin-top: 2rem;
+        }
+        #contact a {
+            display: inline-block;
+            color: var(--primary-text);
+            font-size: 1.2rem;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        #contact a:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #0d1117;
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
     </style>
 </head>
 <body>
 
     <div class="background-container"></div>
+
     <nav>
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
@@ -165,14 +223,11 @@
     </nav>
 
     <section id="hero" class="section">
-        <!-- Animated Hero Title -->
-        <h1 class="hero-title">
-            <span style="--i:1">Z</span><span style="--i:2">e</span><span style="--i:3">y</span><span style="--i:4">a</span><span style="--i:5">d</span>
-            <span class="spacer"></span>
-            <span style="--i:6">Y</span><span style="--i:7">a</span><span style="--i:8">s</span><span style="--i:9">s</span><span style="--i:10">e</span><span style="--i:11">r</span>
-        </h1>
-        <!-- Text Scramble Subtitle -->
-        <p id="hero-subtitle">Digital Craftsmanship & Modern Development</p>
+        <!-- The 'reveal' class is removed here so animations can run on load -->
+        <div>
+            <h1 class="hero-title" id="hero-name">Zeyad Yasser</h1>
+            <p id="hero-subtitle">Digital Craftsmanship & Modern Development</p>
+        </div>
     </section>
 
     <section id="about" class="section">
@@ -186,9 +241,21 @@
         <div class="reveal">
             <h2 class="section-title">My Projects</h2>
             <div class="projects-grid">
-                <div class="project-card"><h3>Project One</h3><p>A brief but compelling description of a project, highlighting the key technologies and its purpose.</p><a href="#" target="_blank">View Project &rarr;</a></div>
-                <div class="project-card"><h3>Project Two</h3><p>This card describes another significant piece of work, showcasing a different skill set or technology stack.</p><a href="#" target="_blank">View Project &rarr;</a></div>
-                <div class="project-card"><h3>Project Three</h3><p>Showcasing a third project to demonstrate versatility and a solid portfolio of work.</p><a href="#" target="_blank">View Project &rarr;</a></div>
+                <div class="project-card">
+                    <h3>Project One</h3>
+                    <p>A brief but compelling description of a project, highlighting the key technologies and its purpose.</p>
+                    <a href="#" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Project Two</h3>
+                    <p>This card describes another significant piece of work, showcasing a different skill set or technology stack.</p>
+                    <a href="#" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Project Three</h3>
+                    <p>Showcasing a third project to demonstrate versatility and a solid portfolio of work.</p>
+                    <a href="#" target="_blank">View Project &rarr;</a>
+                </div>
             </div>
         </div>
     </section>
@@ -206,49 +273,63 @@
     </section>
 
     <script>
-        // --- Onload Scramble Effect for Subtitle ---
-        const letters = "!<>[]{}—=+*#?/";
-        const subtitle = document.getElementById('hero-subtitle');
-        const originalSubtitleText = subtitle.innerText;
-        let interval = null;
+        // --- NEW SCRIPT FOR HERO ANIMATIONS ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Animate the main title
+            const nameElement = document.getElementById('hero-name');
+            const nameText = nameElement.innerText;
+            nameElement.innerHTML = ''; // Clear original text
+            let i = 0;
+            for (const letter of nameText) {
+                const span = document.createElement('span');
+                span.textContent = letter === ' ' ? '\u00A0' : letter; // Handle spaces
+                span.className = 'letter';
+                span.style.setProperty('--i', i++);
+                nameElement.appendChild(span);
+            }
 
-        function scrambleEffect() {
+            // 2. Animate the subtitle with a scramble effect
+            const subtitleElement = document.getElementById('hero-subtitle');
+            const originalSubtitleText = subtitleElement.innerText;
+            const scrambleChars = "!<>[]{}—=+*#?/";
+            let scrambleInterval = null;
+
             let iteration = 0;
-            clearInterval(interval);
-            
-            interval = setInterval(() => {
-                subtitle.innerText = originalSubtitleText
+            clearInterval(scrambleInterval);
+            scrambleInterval = setInterval(() => {
+                subtitleElement.innerText = originalSubtitleText
                     .split("")
-                    .map((letter, index) => {
-                        if (index < iteration) {
+                    .map((char, index) => {
+                        if(index < iteration) {
                             return originalSubtitleText[index];
                         }
-                        return letter !== " " ? letters[Math.floor(Math.random() * letters.length)] : " ";
+                        return char !== " " ? scrambleChars[Math.floor(Math.random() * scrambleChars.length)] : " ";
                     })
                     .join("");
                 
-                if (iteration >= originalSubtitleText.length) { 
-                    clearInterval(interval);
+                if(iteration >= originalSubtitleText.length){
+                    clearInterval(scrambleInterval);
                 }
                 
-                iteration += originalSubtitleText.length / 40; // Control speed
-            }, 30);
-        }
-        window.addEventListener('load', scrambleEffect);
+                iteration += originalSubtitleText.length / 50; // Controls speed
+            }, 40);
+        });
 
-        // --- Scroll-triggered animations for other sections ---
+
+        // --- YOUR ORIGINAL SCROLL ANIMATION SCRIPT ---
         const revealElements = document.querySelectorAll('.reveal');
         const revealOnScroll = () => {
             const windowHeight = window.innerHeight;
             revealElements.forEach(el => {
                 const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
+                if (elementTop < windowHeight - 100) { // 100px buffer
                     el.classList.add('visible');
                 }
             });
         };
         window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll(); // Check on initial load
+        // Trigger on load as well
+        revealOnScroll();
     </script>
 
 </body>
