@@ -6,226 +6,57 @@
     <title>Digital Craftsmanship</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --background-color: #080808;
-            --text-color: #f0f0f0;
-            --muted-text-color: #666;
-            --border-color: #222;
-            --accent-color: #00ff8c;
+            --background-color: #050505;
+            --text-color: #e4e4e4;
+            --accent-color: #ffffff;
+            --muted-color: #505050;
         }
 
         * {
             box-sizing: border-box;
-        }
-
-        html, body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
             cursor: none;
         }
 
-        .wrapper {
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
-            height: 100%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            
+            /* Subtle breathing background effect */
+            background: radial-gradient(circle, #1a1a1a, #050505);
+            animation: subtleShine 10s infinite alternate;
         }
 
         /* Custom Cursor */
         .cursor {
             position: fixed;
-            width: 24px;
-            height: 24px;
-            border: 2px solid white;
+            background: var(--accent-color);
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: transform 0.2s ease-out, width 0.2s ease, height 0.2s ease;
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
             z-index: 9999;
         }
+
         .cursor.hover {
-            transform: translate(-50%, -50%) scale(0.6);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Header Navigation */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 3rem;
-            width: 100%;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.5rem;
-            animation: slideIn 1s ease-out forwards;
-        }
-
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin-left: 2.5rem;
-            font-size: 1rem;
-            opacity: 0;
-            transition: opacity 0.3s ease, color 0.3s ease;
-            animation: slideIn 0.5s ease-out forwards;
-        }
-        nav a:nth-child(1) { animation-delay: 0.2s; }
-        nav a:nth-child(2) { animation-delay: 0.4s; }
-        nav a:nth-child(3) { animation-delay: 0.6s; }
-
-        nav a:hover {
-            opacity: 1;
-            color: var(--accent-color);
-        }
-
-        /* Main Content Area */
-        main {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 7vw, 7rem);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.04em;
-            max-width: 1200px;
-            margin: 0;
-            opacity: 0;
-            animation: slideIn 1s ease-out 0.8s forwards;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: var(--muted-text-color);
-            margin-top: 1.5rem;
-            font-weight: 400;
-            opacity: 0;
-            animation: slideIn 1s ease-out 1s forwards;
-        }
-
-        /* Footer Ticker */
-        footer {
-            width: 100%;
-            border-top: 1px solid var(--border-color);
-            padding: 1.5rem 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .ticker-wrap {
-            display: inline-block;
-            animation: scroll 40s linear infinite;
-        }
-        footer:hover .ticker-wrap {
-            animation-play-state: paused;
-        }
-
-        .ticker-item {
-            display: inline-flex;
-            align-items: center;
-            font-size: 1rem;
-            margin-right: 3rem;
-            color: var(--muted-text-color);
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .ticker-item:hover {
-            color: var(--text-color);
-            transform: scale(1.05);
-        }
-
-        .ticker-item .separator {
-            color: var(--accent-color);
-            margin-right: 3rem;
-            font-size: 0.8rem;
-        }
-        
-        /* Shared Animations */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 0.8;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="cursor"></div>
-
-    <div class="wrapper">
-        <header>
-            <div class="logo">ZY.</div>
-            <nav>
-                <a href="#">About</a>
-                <a href="#">Projects</a>
-                <a href="#">Contact</a>
-            </nav>
-        </header>
-
-        <main>
-            <h1 class="hero-title">Digital Craftsmanship</h1>
-            <p class="hero-subtitle">Design & Development</p>
-        </main>
-
-        <footer>
-            <div class="ticker-wrap">
-                <!-- Content is duplicated for seamless scroll -->
-                <div class="ticker-item"><span class="separator">◆</span>Fullstack Development</div>
-                <div class="ticker-item"><span class="separator">◆</span>UI/UX Design</div>
-                <div class="ticker-item"><span class="separator">◆</span>Backend Systems</div>
-                <div class="ticker-item"><span class="separator">◆</span>API Development</div>
-                <div class="ticker-item"><span class="separator">◆</span>Cloud Solutions</div>
-                
-                <div class="ticker-item"><span class="separator">◆</span>Fullstack Development</div>
-                <div class="ticker-item"><span class="separator">◆</span>UI/UX Design</div>
-                <div class="ticker-item"><span class="separator">◆</span>Backend Systems</div>
-                <div class="ticker-item"><span class="separator">◆</span>API Development</div>
-                <div class="ticker-item"><span class="separator">◆</span>Cloud Solutions</div>
-            </div>
-        </footer>
-    </div>
-
-    <script>
-        const cursor = document.querySelector('.cursor');
-        const links = document.querySelectorAll('a, .ticker-item');
-
-        document.addEventListener('mousemove', e => {
-            cursor.setAttribute("style", `top: ${e.pageY}px; left: ${e.pageX}px;`);
-        });
-
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                cursor.classList.add('hover');
-            });
-            link.addEventListener('mouseleave', () => {
-                cursor.classList.remove('hover');
-            });
-        });
-    </script>
-
-</body>
-</html>
+        /* Corner Elements */
+        .corner-element {
+            position: absolute;
+            padding
