@@ -3,115 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeyad Yasser</title>
+    <title>Zeyad Yasser - Digital Experiences</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --background-color: #0a0a0a;
-            --text-color: #e0e0e0;
-            --accent-color: #00c3ff;
-            --glow-color: rgba(0, 195, 255, 0.5);
+            --background-color: #080808;
+            --text-color: #f0f0f0;
+            --muted-text-color: #666;
+            --border-color: #222;
+            --accent-color: #00ff8c;
         }
 
-        body {
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
             background-color: var(--background-color);
             color: var(--text-color);
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             margin: 0;
             padding: 0;
+            height: 100%;
+            overflow: hidden; /* Prevents scrollbars */
+            cursor: none; /* Hide the default cursor */
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            border: 2px solid white;
+            border-radius: 50%;
+            pointer-events: none; /* Allows clicking through the element */
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+            z-index: 9999;
+        }
+
+        /* Header Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 3rem;
+            width: 100%;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 2.5rem;
+            font-size: 1rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        /* Main Content Area */
+        main {
+            flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            flex-direction: column;
             text-align: center;
-            overflow: hidden;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        .container {
             padding: 2rem;
         }
 
-        .name {
-            font-size: 4rem;
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 6rem); /* Responsive font size */
             font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            max-width: 1200px;
             margin: 0;
-            /* Gradient Text */
-            background: linear-gradient(90deg, var(--accent-color), #d400ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: glow 2s infinite alternate;
         }
 
-        .subtitle {
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            margin: 0.5rem 0 2rem 0;
-            opacity: 0.8;
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--muted-text-color);
+            margin-top: 1.5rem;
+            font-weight: 400;
         }
 
-        .links a {
-            color: var(--text-color);
-            text-decoration: none;
+        /* Footer Ticker */
+        footer {
+            width: 100%;
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            overflow: hidden; /* Essential for the ticker effect */
+            white-space: nowrap;
+        }
+
+        .ticker-wrap {
+            display: inline-block; /* Allows the animation to work properly */
+            animation: scroll 40s linear infinite;
+        }
+
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
             font-size: 1rem;
-            margin: 0 1rem;
-            padding: 0.5rem 0;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
+            margin-right: 3rem;
+            color: var(--muted-text-color);
         }
 
-        .links a:hover {
+        .ticker-item .separator {
             color: var(--accent-color);
-            text-shadow: 0 0 10px var(--glow-color);
-            border-bottom: 2px solid var(--accent-color);
+            margin-right: 3rem;
+            font-size: 0.8rem; /* Make separator smaller */
+        }
+        
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Animate to half the width for a seamless loop */
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 5px #d400ff, 0 0 10px #d400ff, 0 0 15px var(--accent-color);
-            }
-            to {
-                text-shadow: 0 0 10px #d400ff, 0 0 20px var(--accent-color), 0 0 30px var(--accent-color);
-            }
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 600px) {
-            .name {
-                font-size: 2.5rem;
-            }
-            .subtitle {
-                font-size: 1rem;
-            }
-            .links a {
-                display: block;
-                margin: 1rem auto;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="name">Zeyad Yasser</h1>
-        <p class="subtitle">Software Developer & Digital Creator</p>
-        <div class="links">
-            <a href="https://github.com/ZeyadYasser114" target="_blank">GitHub</a>
-            <a href="#" target="_blank">LinkedIn</a>
-            <a href="#" target="_blank">Projects</a>
-            <a href="#" target="_blank">Contact</a>
-        </div>
+
+    <div class="cursor"></div>
+
+    <div class="wrapper">
+        <header>
+            <div class="logo">ZY.</div>
+            <nav>
+                <a href="#">About</a>
+                <a href="#">Projects</a>
+                <a href="#">Contact</a>
+            </nav>
+        </header>
+
+        <main>
+            <h1 class="hero-title">Crafting Digital Experiences</h1>
+            <p class="hero-subtitle">Web Development & Design</p>
+        </main>
+
+        <footer>
+            <div class="ticker-wrap">
+                <!-- Content is duplicated for a seamless scroll effect -->
+                <div class="ticker-item"><span class="separator">◆</span>Fullstack Development</div>
+                <div class="ticker-item"><span class="separator">◆</span>UI/UX Design</div>
+                <div class="ticker-item"><span class="separator">◆</span>Backend Systems</div>
+                <div class="ticker-item"><span class="separator">◆</span>API Development</div>
+                <div class="ticker-item"><span class="separator">◆</span>Cloud Solutions</div>
+                
+                <div class="ticker-item"><span class="separator">◆</span>Fullstack Development</div>
+                <div class="ticker-item"><span class="separator">◆</span>UI/UX Design</div>
+                <div class="ticker-item"><span class="separator">◆</span>Backend Systems</div>
+                <div class="ticker-item"><span class="separator">◆</span>API Development</div>
+                <div class="ticker-item"><span class="separator">◆</span>Cloud Solutions</div>
+            </div>
+        </footer>
     </div>
+
+    <script>
+        // Simple script for the custom cursor
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.setAttribute("style", "top: "+(e.pageY)+"px; left: "+(e.pageX)+"px;")
+        })
+    </script>
+
 </body>
 </html>
