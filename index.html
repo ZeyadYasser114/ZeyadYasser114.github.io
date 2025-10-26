@@ -210,32 +210,51 @@
     </div>
 
     <script>
-// --- HERO ANIMATIONS SCRIPT ---
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // 1. Title Scramble Effect
-    const titleElement = document.getElementById('hero-title');
-    const originalTitle = titleElement.innerText;
-    const scrambleChars = "!<>[]{}—=+*#?/";
-    let titleInterval = null;
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- HERO ANIMATIONS SCRIPT ---
+            
+            // 1. Title Scramble Effect is placed here
+            const titleElement = document.getElementById('hero-title');
+            const originalTitle = titleElement.innerText;
+            const scrambleChars = "!<>[]{}—=+*#?/";
+            let titleInterval = null;
 
-    let titleIteration = 0;
-    clearInterval(titleInterval);
-    titleInterval = setInterval(() => {
-        titleElement.innerText = originalTitle
-            .split("")
-            .map((char, index) => {
-                if(index < titleIteration) return originalTitle[index];
-                return char !== " " ? scrambleChars[Math.floor(Math.random() * scrambleChars.length)] : " ";
-            })
-            .join("");
-        
-        if(titleIteration >= originalTitle.length) clearInterval(titleInterval);
-        titleIteration += originalTitle.length / 40; // Controls speed
-    }, 40);
+            let titleIteration = 0;
+            clearInterval(titleInterval);
+            titleInterval = setInterval(() => {
+                titleElement.innerText = originalTitle
+                    .split("")
+                    .map((char, index) => {
+                        if(index < titleIteration) return originalTitle[index];
+                        return char !== " " ? scrambleChars[Math.floor(Math.random() * scrambleChars.length)] : " ";
+                    })
+                    .join("");
+                
+                if(titleIteration >= originalTitle.length) clearInterval(titleInterval);
+                titleIteration += originalTitle.length / 40;
+            }, 40);
 
-    // ... (The typewriter code would go here)
-});
+            // (Add other animations like the typewriter here if you want)
+        });
+
+        // --- SCROLL REVEAL SCRIPT (Your original code) ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add('visible');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+    </script>
+
+</body>
+</html>
         const cursor = document.querySelector('.cursor');
         const links = document.querySelectorAll('a, .ticker-item');
 
