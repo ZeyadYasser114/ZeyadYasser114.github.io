@@ -6,7 +6,7 @@
     <title>Zeyad Yasser - Digital Craftsmanship</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --background-color: #0d1117;
@@ -34,6 +34,7 @@
             overflow-x: hidden;
         }
 
+        /* Animated Background */
         .background-container {
             position: fixed;
             top: 0;
@@ -45,6 +46,7 @@
             background: linear-gradient(135deg, #161b22, #0d1117, #010409);
         }
 
+        /* General Styles */
         .section {
             padding: 6rem 2rem;
             max-width: 1100px;
@@ -63,6 +65,7 @@
             color: var(--accent-color);
         }
 
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -86,12 +89,12 @@
             color: var(--accent-color);
         }
 
-        /* --- MODIFIED HERO SECTION --- */
+        /* Hero Section */
         #hero {
-            text-align: left; /* Aligned to the left */
+            text-align: center;
         }
         #hero h1 {
-            font-size: clamp(3rem, 7vw, 5.5rem); /* Adjusted size */
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 700;
             line-height: 1.1;
             background: linear-gradient(90deg, var(--accent-color), #fff);
@@ -99,35 +102,13 @@
             background-clip: text;
             color: transparent;
         }
-        
-        /* Typewriter styles */
-        #hero .typewriter {
-            font-family: 'Roboto Mono', monospace; /* Monospaced font for typewriter */
+        #hero p {
             font-size: 1.25rem;
             color: var(--secondary-text);
             margin-top: 1rem;
-            height: 2rem; /* Set height to prevent layout shift */
         }
 
-        /* Blinking cursor effect */
-        .typewriter .cursor {
-            display: inline-block;
-            background-color: var(--secondary-text);
-            margin-left: 0.1rem;
-            width: 3px;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0% { background-color: var(--secondary-text); }
-            49% { background-color: var(--secondary-text); }
-            50% { background-color: transparent; }
-            99% { background-color: transparent; }
-            100% { background-color: var(--secondary-text); }
-        }
-        /* --- END MODIFIED HERO --- */
-
-
+        /* About Section */
         #about p {
             font-size: 1.1rem;
             max-width: 800px;
@@ -136,6 +117,7 @@
             line-height: 1.8;
         }
 
+        /* Projects Section */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -148,21 +130,68 @@
             border-radius: 12px;
             padding: 2rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
         
-        .project-card:hover { transform: translateY(-10px); }
-        .project-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--accent-color); }
-        .project-card p { color: var(--secondary-text); margin-bottom: 1.5rem; }
-        .project-card a { color: var(--primary-text); text-decoration: none; font-weight: 600; }
-        .project-card a:hover { color: var(--accent-color); }
-        
-        #contact { text-align: center; }
-        #contact .links { margin-top: 2rem; }
-        #contact a { display: inline-block; color: var(--primary-text); font-size: 1.2rem; text-decoration: none; margin: 0 1.5rem; padding: 0.5rem 1rem; border: 2px solid var(--border-color); border-radius: 8px; transition: all 0.3s ease; }
-        #contact a:hover { background-color: var(--accent-color); border-color: var(--accent-color); color: #0d1117; }
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .project-card p {
+            color: var(--secondary-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card a {
+            color: var(--primary-text);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .project-card a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Contact Section */
+        #contact {
+            text-align: center;
+        }
+        #contact .links {
+            margin-top: 2rem;
+        }
+        #contact a {
+            display: inline-block;
+            color: var(--primary-text);
+            font-size: 1.2rem;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        #contact a:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #0d1117;
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
     </style>
 </head>
 <body>
@@ -176,9 +205,9 @@
     </nav>
 
     <section id="hero" class="section">
-        <div>
-            <h1 id="hero-title">Digital Craftsmanship</h1>
-            <p class="typewriter"><span id="typewriter-text"></span><span class="cursor">&nbsp;</span></p>
+        <div class="reveal">
+            <h1>Zeyad Yasser</h1>
+            <p>Digital Craftsmanship & Modern Development</p>
         </div>
     </section>
 
@@ -193,9 +222,21 @@
         <div class="reveal">
             <h2 class="section-title">My Projects</h2>
             <div class="projects-grid">
-                <div class="project-card"><h3>Project One</h3><p>A brief but compelling description of a project, highlighting the key technologies and its purpose.</p><a href="#" target="_blank">View Project &rarr;</a></div>
-                <div class="project-card"><h3>Project Two</h3><p>This card describes another significant piece of work, showcasing a different skill set or technology stack.</p><a href="#" target="_blank">View Project &rarr;</a></div>
-                <div class="project-card"><h3>Project Three</h3><p>Showcasing a third project to demonstrate versatility and a solid portfolio of work.</p><a href="#" target="_blank">View Project &rarr;</a></div>
+                <div class="project-card">
+                    <h3>Project One</h3>
+                    <p>A brief but compelling description of a project, highlighting the key technologies and its purpose.</p>
+                    <a href="#" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Project Two</h3>
+                    <p>This card describes another significant piece of work, showcasing a different skill set or technology stack.</p>
+                    <a href="#" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Project Three</h3>
+                    <p>Showcasing a third project to demonstrate versatility and a solid portfolio of work.</p>
+                    <a href="#" target="_blank">View Project &rarr;</a>
+                </div>
             </div>
         </div>
     </section>
@@ -213,73 +254,21 @@
     </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- HERO ANIMATIONS SCRIPT ---
-            
-            // 1. Title Scramble Effect
-            const titleElement = document.getElementById('hero-title');
-            const originalTitle = titleElement.innerText;
-            const scrambleChars = "!<>[]{}—=+*#?/";
-            let titleInterval = null;
-
-            let titleIteration = 0;
-            clearInterval(titleInterval);
-            titleInterval = setInterval(() => {
-                titleElement.innerText = originalTitle
-                    .split("")
-                    .map((char, index) => {
-                        if(index < titleIteration) return originalTitle[index];
-                        return char !== " " ? scrambleChars[Math.floor(Math.random() * scrambleChars.length)] : " ";
-                    })
-                    .join("");
-                
-                if(titleIteration >= originalTitle.length) clearInterval(titleInterval);
-                titleIteration += originalTitle.length / 40;
-            }, 40);
-
-            // 2. Typewriter Effect
-            const typewriterElement = document.getElementById('typewriter-text');
-            const words = ["App Development", "Backend Systems", "Web Design", "API Integration"];
-            let wordIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-
-            function type() {
-                const currentWord = words[wordIndex];
-                const typeSpeed = isDeleting ? 100 : 200;
-
-                // Type or delete a character
-                typewriterElement.textContent = currentWord.substring(0, charIndex);
-
-                if (!isDeleting && charIndex < currentWord.length) {
-                    charIndex++;
-                } else if (isDeleting && charIndex > 0) {
-                    charIndex--;
-                } else {
-                    isDeleting = !isDeleting;
-                    if (!isDeleting) {
-                        wordIndex = (wordIndex + 1) % words.length;
-                    }
-                }
-                
-                const pause = charIndex === currentWord.length ? 2000 : typeSpeed;
-                setTimeout(type, pause);
-            }
-            type();
-        });
-
-        // --- SCROLL REVEAL SCRIPT (UNCHANGED) ---
+        // JavaScript for scroll-triggered animations
         const revealElements = document.querySelectorAll('.reveal');
+
         const revealOnScroll = () => {
             const windowHeight = window.innerHeight;
             revealElements.forEach(el => {
                 const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
+                if (elementTop < windowHeight - 100) { // 100px buffer
                     el.classList.add('visible');
                 }
             });
         };
+
         window.addEventListener('scroll', revealOnScroll);
+        // Trigger on load as well
         revealOnScroll();
     </script>
 
