@@ -104,8 +104,7 @@
             letter-spacing: -0.04em;
             max-width: 1200px;
             margin: 0;
-            opacity: 0;
-            animation: slideIn 1s ease-out 0.8s forwards;
+            /* REMOVED opacity and animation here to let JS control it */
         }
 
         .hero-subtitle {
@@ -187,7 +186,8 @@
         </header>
 
         <main>
-            <h1 class="hero-title">Digital Craftsmanship</h1>
+            <!-- IMPORTANT: Added an ID here for the script to find -->
+            <h1 class="hero-title" id="hero-title">Digital Craftsmanship</h1>
             <p class="hero-subtitle">Design & Development</p>
         </main>
 
@@ -209,12 +209,27 @@
         </footer>
     </div>
 
+    <!-- === CORRECTED AND COMBINED SCRIPT === -->
     <script>
-<script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- HERO ANIMATIONS SCRIPT ---
-            
-            // 1. Title Scramble Effect is placed here
+            // --- CURSOR SCRIPT ---
+            const cursor = document.querySelector('.cursor');
+            const links = document.querySelectorAll('a, .ticker-item');
+
+            document.addEventListener('mousemove', e => {
+                cursor.setAttribute("style", `top: ${e.pageY}px; left: ${e.pageX}px;`);
+            });
+
+            links.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    cursor.classList.add('hover');
+                });
+                link.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hover');
+                });
+            });
+
+            // --- TITLE SCRAMBLE SCRIPT ---
             const titleElement = document.getElementById('hero-title');
             const originalTitle = titleElement.innerText;
             const scrambleChars = "!<>[]{}—=+*#?/";
@@ -232,43 +247,9 @@
                     .join("");
                 
                 if(titleIteration >= originalTitle.length) clearInterval(titleInterval);
-                titleIteration += originalTitle.length / 40;
+                // Controls the speed of the scramble effect
+                titleIteration += originalTitle.length / 45; 
             }, 40);
-
-            // (Add other animations like the typewriter here if you want)
-        });
-
-        // --- SCROLL REVEAL SCRIPT (Your original code) ---
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOnScroll = () => {
-            const windowHeight = window.innerHeight;
-            revealElements.forEach(el => {
-                const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    el.classList.add('visible');
-                }
-            });
-        };
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll();
-    </script>
-
-</body>
-</html>
-        const cursor = document.querySelector('.cursor');
-        const links = document.querySelectorAll('a, .ticker-item');
-
-        document.addEventListener('mousemove', e => {
-            cursor.setAttribute("style", `top: ${e.pageY}px; left: ${e.pageX}px;`);
-        });
-
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                cursor.classList.add('hover');
-            });
-            link.addEventListener('mouseleave', () => {
-                cursor.classList.remove('hover');
-            });
         });
     </script>
 
