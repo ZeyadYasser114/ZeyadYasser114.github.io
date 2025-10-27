@@ -2,255 +2,274 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.5">
-    <title>Digital Craftsmanship</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeyad Yasser - Digital Craftsmanship</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --background-color: #080808;
-            --text-color: #f0f0f0;
-            --muted-text-color: #666;
-            --border-color: #222;
-            --accent-color: #00ff8c;
+            --background-color: #0d1117;
+            --primary-text: #e6edf3;
+            --secondary-text: #8b949e;
+            --accent-color: #38bdf8; /* Light Blue */
+            --border-color: rgba(255, 255, 255, 0.1);
         }
 
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
-        }
-
-        html, body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow: hidden;
-            cursor: none;
         }
 
-        .wrapper {
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--primary-text);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #161b22, #0d1117, #010409);
+        }
+
+        /* General Styles */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            height: 100%;
+            justify-content: center;
         }
-
-        /* Custom Cursor */
-        .cursor {
-            position: fixed;
-            width: 24px;
-            height: 24px;
-            border: 2px solid white;
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: transform 0.2s ease-out, width 0.2s ease, height 0.2s ease;
-            z-index: 9999;
-        }
-        .cursor.hover {
-            transform: translate(-50%, -50%) scale(0.6);
-        }
-
-        /* Header Navigation */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 3rem;
-            width: 100%;
-        }
-
-        .logo {
+        
+        .section-title {
+            font-size: 2.5rem;
             font-weight: 700;
-            font-size: 1.5rem;
-            animation: slideIn 1s ease-out forwards;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--accent-color);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
         }
 
         nav a {
-            color: var(--text-color);
+            color: var(--primary-text);
             text-decoration: none;
-            margin-left: 2.5rem;
-            font-size: 1rem;
-            opacity: 0;
-            transition: opacity 0.3s ease, color 0.3s ease;
-            animation: slideIn 0.5s ease-out forwards;
+            margin: 0 1.5rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
         }
-        nav a:nth-child(1) { animation-delay: 0.2s; }
-        nav a:nth-child(2) { animation-delay: 0.4s; }
-        nav a:nth-child(3) { animation-delay: 0.6s; }
-
         nav a:hover {
-            opacity: 1;
             color: var(--accent-color);
         }
 
-        /* Main Content Area */
-        main {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+        /* Hero Section */
+        #hero {
             text-align: center;
-            padding: 2rem;
         }
-
-        .hero-title {
-            font-size: clamp(3rem, 7vw, 7rem);
+        #hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 700;
             line-height: 1.1;
-            letter-spacing: -0.04em;
-            max-width: 1200px;
-            margin: 0;
-            /* REMOVED opacity and animation here to let JS control it */
+            background: linear-gradient(90deg, var(--accent-color), #fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        #hero p {
+            font-size: 1.25rem;
+            color: var(--secondary-text);
+            margin-top: 1rem;
         }
 
-        .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: var(--muted-text-color);
-            margin-top: 1.5rem;
-            font-weight: 400;
-            opacity: 0;
-            animation: slideIn 1s ease-out 1s forwards;
+        /* About Section */
+        #about p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.8;
         }
 
-        /* Footer Ticker */
-        footer {
-            width: 100%;
-            border-top: 1px solid var(--border-color);
-            padding: 1.5rem 0;
-            overflow: hidden;
-            white-space: nowrap;
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
-        .ticker-wrap {
-            display: inline-block;
-            animation: scroll 40s linear infinite;
+        .project-card {
+            background: #161b22;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
-        footer:hover .ticker-wrap {
-            animation-play-state: paused;
-        }
-
-        .ticker-item {
-            display: inline-flex;
-            align-items: center;
-            font-size: 1rem;
-            margin-right: 3rem;
-            color: var(--muted-text-color);
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .ticker-item:hover {
-            color: var(--text-color);
-            transform: scale(1.05);
+        
+        .project-card:hover {
+            transform: translateY(-10px);
         }
 
-        .ticker-item .separator {
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
             color: var(--accent-color);
-            margin-right: 3rem;
-            font-size: 0.8rem;
         }
         
-        /* Shared Animations */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 0.8;
-                transform: translateY(0);
-            }
+        .project-card p {
+            color: var(--secondary-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card a {
+            color: var(--primary-text);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .project-card a:hover {
+            color: var(--accent-color);
         }
         
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        /* Contact Section */
+        #contact {
+            text-align: center;
+        }
+        #contact .links {
+            margin-top: 2rem;
+        }
+        #contact a {
+            display: inline-block;
+            color: var(--primary-text);
+            font-size: 1.2rem;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        #contact a:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #0d1117;
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
     </style>
 </head>
 <body>
 
-    <div class="cursor"></div>
+    <div class="background-container"></div>
 
-    <div class="wrapper">
-        <header>
-            <div class="logo">ZY.</div>
-            <nav>
-                <a href="#">About</a>
-                <a href="#">Projects</a>
-                <a href="#">Contact</a>
-            </nav>
-        </header>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-        <main>
-            <!-- IMPORTANT: Added an ID here for the script to find -->
-            <h1 class="hero-title" id="hero-title">Digital Craftsmanship</h1>
-            <p class="hero-subtitle">Design & Development</p>
-        </main>
+    <section id="hero" class="section">
+        <div class="reveal">
+            <h1>Zeyad Yasser</h1>
+            <p>Digital Craftsmanship & Modern Development</p>
+        </div>
+    </section>
 
-        <footer>
-            <div class="ticker-wrap">
-                <!-- Content is duplicated for seamless scroll -->
-                <div class="ticker-item"><span class="separator">◆</span>Fullstack Development</div>
-                <div class="ticker-item"><span class="separator">◆</span>UI/UX Design</div>
-                <div class="ticker-item"><span class="separator">◆</span>Backend Systems</div>
-                <div class="ticker-item"><span class="separator">◆</span>API Development</div>
-                <div class="ticker-item"><span class="separator">◆</span>Cloud Solutions</div>
-                
-                <div class="ticker-item"><span class="separator">◆</span>Fullstack Development</div>
-                <div class="ticker-item"><span class="separator">◆</span>UI/UX Design</div>
-                <div class="ticker-item"><span class="separator">◆</span>Backend Systems</div>
-                <div class="ticker-item"><span class="separator">◆</span>API Development</div>
-                <div class="ticker-item"><span class="separator">◆</span>Cloud Solutions</div>
+    <section id="about" class="section">
+        <div class="reveal">
+            <h2 class="section-title">About Me</h2>
+            <p>I am a passionate developer and designer with a keen eye for detail. I specialize in building high-quality, responsive websites and applications that are not only functional but also provide an exceptional user experience. My goal is to transform complex problems into elegant, simple solutions.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="reveal">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Project One</h3>
+                    <p>A brief but compelling description of a project, highlighting the key technologies and its purpose.</p>
+                    <a href="#" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Project Two</h3>
+                    <p>This card describes another significant piece of work, showcasing a different skill set or technology stack.</p>
+                    <a href="#" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Project Three</h3>
+                    <p>Showcasing a third project to demonstrate versatility and a solid portfolio of work.</p>
+                    <a href="#" target="_blank">View Project &rarr;</a>
+                </div>
             </div>
-        </footer>
-    </div>
+        </div>
+    </section>
 
-    <!-- === CORRECTED AND COMBINED SCRIPT === -->
+    <section id="contact" class="section">
+        <div class="reveal">
+            <h2 class="section-title">Get In Touch</h2>
+            <p>I'm currently available for freelance work and open to new opportunities.</p>
+            <div class="links">
+                <a href="mailto:your-email@example.com">Email</a>
+                <a href="https://github.com/ZeyadYasser114" target="_blank">GitHub</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- CURSOR SCRIPT ---
-            const cursor = document.querySelector('.cursor');
-            const links = document.querySelectorAll('a, .ticker-item');
+        // JavaScript for scroll-triggered animations
+        const revealElements = document.querySelectorAll('.reveal');
 
-            document.addEventListener('mousemove', e => {
-                cursor.setAttribute("style", `top: ${e.pageY}px; left: ${e.pageX}px;`);
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) { // 100px buffer
+                    el.classList.add('visible');
+                }
             });
+        };
 
-            links.forEach(link => {
-                link.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hover');
-                });
-                link.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hover');
-                });
-            });
-
-            // --- TITLE SCRAMBLE SCRIPT ---
-            const titleElement = document.getElementById('hero-title');
-            const originalTitle = titleElement.innerText;
-            const scrambleChars = "!<>[]{}—=+*#?/";
-            let titleInterval = null;
-
-            let titleIteration = 0;
-            clearInterval(titleInterval);
-            titleInterval = setInterval(() => {
-                titleElement.innerText = originalTitle
-                    .split("")
-                    .map((char, index) => {
-                        if(index < titleIteration) return originalTitle[index];
-                        return char !== " " ? scrambleChars[Math.floor(Math.random() * scrambleChars.length)] : " ";
-                    })
-                    .join("");
-                
-                if(titleIteration >= originalTitle.length) clearInterval(titleInterval);
-                // Controls the speed of the scramble effect
-                titleIteration += originalTitle.length / 45; 
-            }, 40);
-        });
+        window.addEventListener('scroll', revealOnScroll);
+        // Trigger on load as well
+        revealOnScroll();
     </script>
 
 </body>
