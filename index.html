@@ -9,6 +9,7 @@
     <meta property="og:title" content="Zeyad Yasser | Developer × Creator">
     <meta property="og:description" content="Computer Science Student @ Zewail University. Building software and creating digital experiences.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Dancing+Script:wght@600&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
     <style>
         body { 
@@ -29,7 +30,6 @@
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
         }
-        html { scroll-behavior: smooth; }
         
         @keyframes fadeInUp {
             from {
@@ -88,6 +88,27 @@
         @media (max-width: 768px) {
             .cursive { font-size: 3rem; }
             .glass { padding: 1.5rem; }
+        }
+
+        /* Hide scrollbar for Lenis smooth scroll */
+        html.lenis, html.lenis body {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
         }
     </style>
 </head>
@@ -215,6 +236,29 @@
 
     <script>
         // ==========================================
+        // LENIS SMOOTH SCROLL
+        // ==========================================
+        
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+
+        // ==========================================
         // ENHANCED SCATTER PARTICLE SYSTEM
         // ==========================================
         
@@ -336,10 +380,12 @@
                 this.mouse = { x: null, y: null };
                 this.connectionDistance = 100;
                 this.maxConnections = 3;
+                this.scatterTriggers = [];
                 
                 this.init();
                 this.animate();
                 this.addEventListeners();
+                this.setupScatterTriggers();
             }
 
             init() {
@@ -386,6 +432,51 @@
                 window.addEventListener('touchend', () => {
                     this.mouse.x = null;
                     this.mouse.y = null;
+                });
+            }
+
+            // REPLAY SCATTER ON HOVER
+            setupScatterTriggers() {
+                // Get all project cards and other interactive elements
+                const cards = document.querySelectorAll('.project-card, .glass');
+                
+                cards.forEach(card => {
+                    card.addEventListener('mouseenter', (e) => {
+                        this.triggerScatter(e);
+                    });
+                    
+                    card.addEventListener('mouseleave', () => {
+                        // Optional: Reset scatter after delay
+                        setTimeout(() => {
+                            this.mouse.x = null;
+                            this.mouse.y = null;
+                        }, 300);
+                    });
+                });
+            }
+
+            triggerScatter(e) {
+                const rect = e.target.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // Create a temporary "virtual mouse" at the center of the card
+                this.mouse.x = centerX;
+                this.mouse.y = centerY;
+                
+                // Force immediate scatter by temporarily increasing the force
+                this.particles.forEach(particle => {
+                    let dx = this.mouse.x - particle.x;
+                    let dy = this.mouse.y - particle.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 200) {
+                        let force = (200 - distance) / 200;
+                        let angle = Math.atan2(dy, dx);
+                        particle.x -= Math.cos(angle) * force * 50;
+                        particle.y -= Math.sin(angle) * force * 50;
+                        particle.glow = 30;
+                    }
                 });
             }
 
@@ -444,6 +535,7 @@
                 this.originalText = element.getAttribute('data-text');
                 this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
                 this.update = this.update.bind(this);
+                this.hasAnimated = false;
             }
 
             setText(newText) {
@@ -500,6 +592,11 @@
             randomChar() {
                 return this.chars[Math.floor(Math.random() * this.chars.length)];
             }
+
+            // REPLAY scramble animation
+            replay() {
+                this.setText(this.originalText);
+            }
         }
 
         // Intersection Observer for scroll-triggered animation
@@ -516,6 +613,8 @@
                     
                     scrambleElements.forEach((element, index) => {
                         const scrambler = new ScrambleText(element);
+                        // Store scrambler instance on element for replay
+                        element.scrambler = scrambler;
                         setTimeout(() => {
                             scrambler.setText(element.getAttribute('data-text'));
                         }, index * 150);
@@ -529,10 +628,22 @@
         // Observe all project cards
         document.querySelectorAll('.project-card').forEach(card => {
             observer.observe(card);
+            
+            // ADD HOVER REPLAY
+            card.addEventListener('mouseenter', () => {
+                const scrambleElements = card.querySelectorAll('.scramble-text');
+                scrambleElements.forEach((element, index) => {
+                    if (element.scrambler) {
+                        setTimeout(() => {
+                            element.scrambler.replay();
+                        }, index * 100);
+                    }
+                });
+            });
         });
 
         // ==========================================
-        // IMPROVEMENT 3: Fade-In Animation for Sections
+        // SECTION FADE-IN ANIMATION
         // ==========================================
         
         const revealElements = document.querySelectorAll('.reveal');
@@ -551,7 +662,7 @@
         revealElements.forEach(el => revealObserver.observe(el));
 
         // ==========================================
-        // IMPROVEMENT 4: Smooth Scroll with Offset
+        // SMOOTH SCROLL WITH LENIS
         // ==========================================
         
         document.querySelectorAll('.scroll-link').forEach(link => {
@@ -561,12 +672,9 @@
                 const targetSection = document.querySelector(targetId);
                 
                 if (targetSection) {
-                    const offset = 80; // Adjust this value for header offset
-                    const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
+                    lenis.scrollTo(targetSection, {
+                        offset: -80,
+                        duration: 1.2
                     });
                 }
             });
