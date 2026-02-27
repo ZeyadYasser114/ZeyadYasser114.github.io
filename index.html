@@ -72,6 +72,18 @@
             position: relative;
             z-index: 1;
         }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
         
         @media (max-width: 768px) {
             .cursive { font-size: 3rem; }
@@ -93,8 +105,8 @@
                 Specialized in Software Engineering.
             </p>
             <div class="mt-12 flex space-x-6 mono text-xs uppercase tracking-widest">
-                <a href="#about" class="hover:text-white transition-colors">About</a>
-                <a href="#work" class="hover:text-white transition-colors">Projects</a>
+                <a href="#about" class="hover:text-white transition-colors scroll-link">About</a>
+                <a href="#work" class="hover:text-white transition-colors scroll-link">Projects</a>
                 <a href="mailto:zeyad2007.4y@gmail.com" class="hover:text-white transition-colors">Contact</a>
             </div>
             
@@ -106,7 +118,7 @@
         </header>
 
         <!-- About Section -->
-        <section id="about" class="max-w-2xl mx-auto px-6 py-20 text-center">
+        <section id="about" class="max-w-2xl mx-auto px-6 py-20 text-center reveal">
             <h2 class="mono text-xs uppercase tracking-[0.3em] opacity-30 mb-8">About</h2>
             <p class="text-lg opacity-60 font-light leading-relaxed mb-6">
                 I'm a developer, my work spans software development, creative production, and everything in between.
@@ -118,7 +130,7 @@
         </section>
 
         <!-- Tech Stack Section -->
-        <section class="max-w-4xl mx-auto px-6 py-20">
+        <section class="max-w-4xl mx-auto px-6 py-20 reveal">
             <h2 class="mono text-xs uppercase tracking-[0.3em] opacity-30 text-center mb-12">Tech Stack</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="glass p-6 rounded-2xl text-center hover:border-white/20 transition-all">
@@ -141,7 +153,7 @@
         </section>
 
         <!-- Projects Section -->
-        <main id="work" class="max-w-4xl mx-auto px-6 pb-32">
+        <main id="work" class="max-w-4xl mx-auto px-6 pb-32 reveal">
             <div class="text-center mb-16">
                 <h2 class="mono text-xs uppercase tracking-[0.3em] opacity-30">Projects</h2>
             </div>
@@ -190,7 +202,7 @@
             </div>
         </main>
 
-        <footer class="py-20 border-t border-white/5 text-center">
+        <footer class="py-20 border-t border-white/5 text-center reveal">
             <div class="cursive text-3xl mb-4 opacity-80">Founder at Meraki Dot Studios</div>
             <p class="mono text-[10px] uppercase tracking-[0.4em] opacity-30 mb-8">Animation • Editing • Production</p>
             <div class="flex justify-center space-x-8 text-sm mono opacity-40">
@@ -214,6 +226,7 @@
                 // Start with random position for initial scatter
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
+                this.glow = 0;
             }
 
             reset() {
@@ -267,12 +280,17 @@
                         
                         // Increase opacity when scattered
                         this.opacity = Math.min(1, this.baseOpacity + force * 0.5);
+                        
+                        // Add glow effect near mouse
+                        this.glow = force * 20;
                     } else {
-                        // Return to base opacity
+                        // Return to base opacity and glow
                         this.opacity += (this.baseOpacity - this.opacity) * 0.05;
+                        this.glow += (0 - this.glow) * 0.1;
                     }
                 } else {
                     this.opacity += (this.baseOpacity - this.opacity) * 0.05;
+                    this.glow += (0 - this.glow) * 0.1;
                 }
 
                 // Boundary wrap
@@ -289,11 +307,22 @@
             }
 
             draw() {
+                // Draw glow if present
+                if (this.glow > 0.5) {
+                    this.ctx.shadowBlur = this.glow;
+                    this.ctx.shadowColor = `rgba(${this.color}, 0.8)`;
+                } else {
+                    this.ctx.shadowBlur = 0;
+                }
+                
                 this.ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
                 this.ctx.beginPath();
                 this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 this.ctx.closePath();
                 this.ctx.fill();
+                
+                // Reset shadow for performance
+                this.ctx.shadowBlur = 0;
             }
         }
 
@@ -302,7 +331,8 @@
                 this.canvas = document.getElementById('scatter-canvas');
                 this.ctx = this.canvas.getContext('2d');
                 this.particles = [];
-                this.particleCount = 100;
+                // IMPROVEMENT 1: Reduce particle count on mobile
+                this.particleCount = window.innerWidth < 768 ? 50 : 100;
                 this.mouse = { x: null, y: null };
                 this.connectionDistance = 100;
                 this.maxConnections = 3;
@@ -320,6 +350,8 @@
             resize() {
                 this.canvas.width = window.innerWidth;
                 this.canvas.height = window.innerHeight;
+                // Update particle count on resize
+                this.particleCount = window.innerWidth < 768 ? 50 : 100;
             }
 
             createParticles() {
@@ -497,6 +529,47 @@
         // Observe all project cards
         document.querySelectorAll('.project-card').forEach(card => {
             observer.observe(card);
+        });
+
+        // ==========================================
+        // IMPROVEMENT 3: Fade-In Animation for Sections
+        // ==========================================
+        
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ==========================================
+        // IMPROVEMENT 4: Smooth Scroll with Offset
+        // ==========================================
+        
+        document.querySelectorAll('.scroll-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    const offset = 80; // Adjust this value for header offset
+                    const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
     </script>
 
