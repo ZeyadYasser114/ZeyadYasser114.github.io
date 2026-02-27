@@ -115,13 +115,15 @@
         
         <div class="grid grid-cols-1 gap-8">
             <a href="https://github.com/ZeyadYasser114/StudentManagementSystem" target="_blank" 
-               class="glass p-10 rounded-3xl hover:border-white/20 transition-all group text-center relative overflow-hidden">
+               class="glass p-10 rounded-3xl hover:border-white/20 transition-all group text-center relative overflow-hidden project-card">
                 <div class="absolute inset-0 bg-gradient-to-br from-white/0 to-white/0 group-hover:from-white/5 group-hover:to-transparent transition-all"></div>
                 
                 <div class="relative z-10">
                     <span class="mono text-xs opacity-30 uppercase tracking-widest">Python / Software Management Design</span>
-                    <h3 class="text-3xl mt-4 mb-3 font-medium group-hover:scale-105 transition-transform">Student Management System</h3>
-                    <p class="opacity-50 font-light max-w-md mx-auto">A robust system built with clean architecture to manage academic data efficiently.</p>
+                    <h3 class="text-3xl mt-4 mb-3 font-medium group-hover:scale-105 transition-transform scramble-text" 
+                        data-text="Student Management System">Student Management System</h3>
+                    <p class="opacity-50 font-light max-w-md mx-auto scramble-text" 
+                       data-text="A robust system built with clean architecture to manage academic data efficiently.">A robust system built with clean architecture to manage academic data efficiently.</p>
                     
                     <div class="flex flex-wrap gap-2 justify-center mt-4">
                         <span class="px-3 py-1 text-[10px] mono bg-white/5 rounded-full">Python</span>
@@ -133,13 +135,15 @@
             </a>
 
             <a href="https://github.com/ZeyadYasser114/JustToDO" target="_blank" 
-               class="glass p-10 rounded-3xl hover:border-white/20 transition-all group text-center relative overflow-hidden">
+               class="glass p-10 rounded-3xl hover:border-white/20 transition-all group text-center relative overflow-hidden project-card">
                 <div class="absolute inset-0 bg-gradient-to-br from-white/0 to-white/0 group-hover:from-white/5 group-hover:to-transparent transition-all"></div>
                 
                 <div class="relative z-10">
                     <span class="mono text-xs opacity-30 uppercase tracking-widest">Productivity / Logic</span>
-                    <h3 class="text-3xl mt-4 mb-3 font-medium group-hover:scale-105 transition-transform">JustToDo</h3>
-                    <p class="opacity-50 font-light max-w-md mx-auto">A minimalist task management application focusing on user flow and essential features.</p>
+                    <h3 class="text-3xl mt-4 mb-3 font-medium group-hover:scale-105 transition-transform scramble-text" 
+                        data-text="JustToDo">JustToDo</h3>
+                    <p class="opacity-50 font-light max-w-md mx-auto scramble-text" 
+                       data-text="A minimalist task management application focusing on user flow and essential features.">A minimalist task management application focusing on user flow and essential features.</p>
                     
                     <div class="flex flex-wrap gap-2 justify-center mt-4">
                         <span class="px-3 py-1 text-[10px] mono bg-white/5 rounded-full">Python</span>
@@ -162,6 +166,102 @@
         </div>
         <p class="mt-12 text-[10px] mono opacity-20">© 2026 ZEYAD YASSER. ALL RIGHTS RESERVED.</p>
     </footer>
+
+    <script>
+        // Scramble text animation
+        class ScrambleText {
+            constructor(element) {
+                this.element = element;
+                this.originalText = element.getAttribute('data-text');
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+            }
+
+            setText(newText) {
+                const oldText = this.element.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise(resolve => this.resolve = resolve);
+                this.queue = [];
+                
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 40);
+                    const end = start + Math.floor(Math.random() * 40);
+                    this.queue.push({ from, to, start, end });
+                }
+                
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+
+            update() {
+                let output = '';
+                let complete = 0;
+                
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.28) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += char;
+                    } else {
+                        output += from;
+                    }
+                }
+                
+                this.element.innerText = output;
+                
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        // Intersection Observer for scroll-triggered animation
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target;
+                    const scrambleElements = card.querySelectorAll('.scramble-text');
+                    
+                    scrambleElements.forEach((element, index) => {
+                        const scrambler = new ScrambleText(element);
+                        setTimeout(() => {
+                            scrambler.setText(element.getAttribute('data-text'));
+                        }, index * 200);
+                    });
+                    
+                    observer.unobserve(card);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
 
 </body>
 </html>
