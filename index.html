@@ -168,12 +168,12 @@
     </footer>
 
     <script>
-        // Scramble text animation
+        // Smoother scramble text animation
         class ScrambleText {
             constructor(element) {
                 this.element = element;
                 this.originalText = element.getAttribute('data-text');
-                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
                 this.update = this.update.bind(this);
             }
 
@@ -186,8 +186,8 @@
                 for (let i = 0; i < length; i++) {
                     const from = oldText[i] || '';
                     const to = newText[i] || '';
-                    const start = Math.floor(Math.random() * 40);
-                    const end = start + Math.floor(Math.random() * 40);
+                    const start = Math.floor(Math.random() * 20); // Reduced for smoother start
+                    const end = start + Math.floor(Math.random() * 30); // Longer scramble duration
                     this.queue.push({ from, to, start, end });
                 }
                 
@@ -208,7 +208,7 @@
                         complete++;
                         output += to;
                     } else if (this.frame >= start) {
-                        if (!char || Math.random() < 0.28) {
+                        if (!char || Math.random() < 0.15) { // Less frequent char change for smoother effect
                             char = this.randomChar();
                             this.queue[i].char = char;
                         }
@@ -249,7 +249,7 @@
                         const scrambler = new ScrambleText(element);
                         setTimeout(() => {
                             scrambler.setText(element.getAttribute('data-text'));
-                        }, index * 200);
+                        }, index * 150); // Slightly faster stagger
                     });
                     
                     observer.unobserve(card);
