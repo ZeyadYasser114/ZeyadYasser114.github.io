@@ -3,274 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeyad Yasser - Digital Craftsmanship</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Zeyad Yasser | Developer & Creator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --background-color: #0d1117;
-            --primary-text: #e6edf3;
-            --secondary-text: #8b949e;
-            --accent-color: #38bdf8; /* Light Blue */
-            --border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--background-color);
-            color: var(--primary-text);
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .background-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            background: linear-gradient(135deg, #161b22, #0d1117, #010409);
-        }
-
-        /* General Styles */
-        .section {
-            padding: 6rem 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            text-align: center;
-            color: var(--accent-color);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: center;
-            background: rgba(13, 17, 23, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-        }
-
-        nav a {
-            color: var(--primary-text);
-            text-decoration: none;
-            margin: 0 1.5rem;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        nav a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Hero Section */
-        #hero {
-            text-align: center;
-        }
-        #hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 700;
-            line-height: 1.1;
-            background: linear-gradient(90deg, var(--accent-color), #fff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        #hero p {
-            font-size: 1.25rem;
-            color: var(--secondary-text);
-            margin-top: 1rem;
-        }
-
-        /* About Section */
-        #about p {
-            font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            line-height: 1.8;
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: #161b22;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .project-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--accent-color);
-        }
-        
-        .project-card p {
-            color: var(--secondary-text);
-            margin-bottom: 1.5rem;
-        }
-
-        .project-card a {
-            color: var(--primary-text);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .project-card a:hover {
-            color: var(--accent-color);
-        }
-        
-        /* Contact Section */
-        #contact {
-            text-align: center;
-        }
-        #contact .links {
-            margin-top: 2rem;
-        }
-        #contact a {
-            display: inline-block;
-            color: var(--primary-text);
-            font-size: 1.2rem;
-            text-decoration: none;
-            margin: 0 1.5rem;
-            padding: 0.5rem 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        #contact a:hover {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            color: #0d1117;
-        }
-
-        /* Scroll Animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #ededed; }
+        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        .mono { font-family: 'Fira Code', monospace; }
+        .gradient-text { background: linear-gradient(90deg, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body>
+<body class="selection:bg-white selection:text-black">
 
-    <div class="background-container"></div>
-
-    <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+    <nav class="max-w-5xl mx-auto px-6 py-8 flex justify-between items-center">
+        <span class="mono text-sm tracking-tighter">ZY.2026</span>
+        <div class="space-x-6 text-sm opacity-60 hover:opacity-100 transition-opacity">
+            <a href="#work" class="hover:text-white">Work</a>
+            <a href="#about" class="hover:text-white">About</a>
+            <a href="mailto:zeyad2007.4y@gmail.com" class="hover:text-white">Contact</a>
+        </div>
     </nav>
 
-    <section id="hero" class="section">
-        <div class="reveal">
-            <h1>Zeyad Yasser</h1>
-            <p>Digital Craftsmanship & Modern Development</p>
-        </div>
-    </section>
+    <header class="max-w-5xl mx-auto px-6 pt-20 pb-32">
+        <h1 class="text-5xl md:text-7xl font-semibold tracking-tight gradient-text">Zeyad Yasser</h1>
+        <p class="mt-6 text-xl md:text-2xl opacity-50 max-w-2xl font-light leading-relaxed">
+            Computer Science Student @ Zewail University. <br>
+            Bridging the gap between <span class="text-white opacity-100">Software Architecture</span> and <span class="text-white opacity-100">Creative Direction</span>.
+        </p>
+    </header>
 
-    <section id="about" class="section">
-        <div class="reveal">
-            <h2 class="section-title">About Me</h2>
-            <p>I am a passionate developer and designer with a keen eye for detail. I specialize in building high-quality, responsive websites and applications that are not only functional but also provide an exceptional user experience. My goal is to transform complex problems into elegant, simple solutions.</p>
-        </div>
-    </section>
+    <main id="work" class="max-w-5xl mx-auto px-6 pb-32">
+        <h2 class="mono text-xs uppercase tracking-[0.3em] opacity-30 mb-12">Selected Works</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass p-8 rounded-2xl hover:border-white/30 transition-all group">
+                <span class="mono text-xs opacity-40">01 / Development</span>
+                <h3 class="text-2xl mt-4 mb-2 group-hover:translate-x-1 transition-transform">Software Systems</h3>
+                <p class="opacity-50 font-light mb-6">High-performance Java & Python implementations focusing on discipline and clean code.</p>
+                <a href="https://github.com/ZeyadYasser114" class="text-sm border-b border-white/20 pb-1 hover:border-white">View Repository →</a>
+            </div>
 
-    <section id="projects" class="section">
-        <div class="reveal">
-            <h2 class="section-title">My Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Project One</h3>
-                    <p>A brief but compelling description of a project, highlighting the key technologies and its purpose.</p>
-                    <a href="#" target="_blank">View Project &rarr;</a>
-                </div>
-                <div class="project-card">
-                    <h3>Project Two</h3>
-                    <p>This card describes another significant piece of work, showcasing a different skill set or technology stack.</p>
-                    <a href="#" target="_blank">View Project &rarr;</a>
-                </div>
-                <div class="project-card">
-                    <h3>Project Three</h3>
-                    <p>Showcasing a third project to demonstrate versatility and a solid portfolio of work.</p>
-                    <a href="#" target="_blank">View Project &rarr;</a>
-                </div>
+            <div class="glass p-8 rounded-2xl hover:border-white/30 transition-all group">
+                <span class="mono text-xs opacity-40">02 / Creative</span>
+                <h3 class="text-2xl mt-4 mb-2 group-hover:translate-x-1 transition-transform">Meraki Dot Studios</h3>
+                <p class="opacity-50 font-light mb-6">Visual storytelling through Blender animation and premium video editing.</p>
+                <a href="#" class="text-sm border-b border-white/20 pb-1 hover:border-white">Portfolio Soon →</a>
             </div>
         </div>
-    </section>
+    </main>
 
-    <section id="contact" class="section">
-        <div class="reveal">
-            <h2 class="section-title">Get In Touch</h2>
-            <p>I'm currently available for freelance work and open to new opportunities.</p>
-            <div class="links">
-                <a href="mailto:your-email@example.com">Email</a>
-                <a href="https://github.com/ZeyadYasser114" target="_blank">GitHub</a>
-                <a href="#">LinkedIn</a>
+    <footer id="about" class="border-t border-white/10">
+        <div class="max-w-5xl mx-auto px-6 py-20 flex flex-col md:flex-row justify-between items-start gap-12">
+            <div>
+                <h2 class="text-2xl mb-4">Let's build something distinct.</h2>
+                <p class="opacity-40 max-w-xs font-light">Available for collaborative engineering and creative projects.</p>
+            </div>
+            <div class="flex flex-col space-y-2 mono text-sm">
+                <a href="https://github.com/ZeyadYasser114" class="opacity-50 hover:opacity-100">GitHub</a>
+                <a href="mailto:zeyad2007.4y@gmail.com" class="opacity-50 hover:opacity-100">Email</a>
+                <span class="opacity-20 pt-4">© 2026 Zeyad Yasser</span>
             </div>
         </div>
-    </section>
-
-    <script>
-        // JavaScript for scroll-triggered animations
-        const revealElements = document.querySelectorAll('.reveal');
-
-        const revealOnScroll = () => {
-            const windowHeight = window.innerHeight;
-            revealElements.forEach(el => {
-                const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) { // 100px buffer
-                    el.classList.add('visible');
-                }
-            });
-        };
-
-        window.addEventListener('scroll', revealOnScroll);
-        // Trigger on load as well
-        revealOnScroll();
-    </script>
+    </footer>
 
 </body>
 </html>
