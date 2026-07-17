@@ -187,7 +187,7 @@
             </p>
         </section>
 
-        <!-- Tech Stack Section -->
+     <!-- Tech Stack Section -->
         <section class="max-w-4xl mx-auto px-6 py-20 reveal">
             <h2 class="mono text-xs uppercase tracking-[0.3em] opacity-30 text-center mb-12">Tech Stack</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -209,6 +209,34 @@
                 </div>
             </div>
         </section>
+
+        <style>
+            .tech-card {
+                transition: transform 0.2s ease;
+                transform-style: preserve-3d;
+                will-change: transform;
+            }
+        </style>
+
+        <script>
+        document.querySelectorAll('.tech-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -6;
+                const rotateY = ((x - centerX) / centerX) * 6;
+
+                card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)';
+            });
+        });
+        </script>
 
         <!-- Projects Section -->
         <main id="work" class="max-w-4xl mx-auto px-6 pb-32 reveal">
